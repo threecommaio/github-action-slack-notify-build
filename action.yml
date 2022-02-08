@@ -20,6 +20,10 @@ inputs:
   message_id:
     description: 'The ID of the existing Slack message to update.'
     required: false
+  username:
+    description: 'The bots username.'
+    required: false
+    default: ''
 outputs:
   message_id:
     description: 'The unique timestamp identifier of the Slack message sent'

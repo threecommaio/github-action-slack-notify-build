@@ -11,6 +11,7 @@ const { buildSlackAttachments, formatChannelName } = require('./src/utils');
     const messageId = core.getInput('message_id');
     const token = process.env.SLACK_BOT_TOKEN;
     const slack = new WebClient(token);
+    const username = core.getInput('username');
 
     if (!channel && !core.getInput('channel_id')) {
       core.setFailed(`You must provider either a 'channel' or a 'channel_id'.`);
@@ -28,6 +29,7 @@ const { buildSlackAttachments, formatChannelName } = require('./src/utils');
     const apiMethod = Boolean(messageId) ? 'update' : 'postMessage';
 
     const args = {
+      username: username,
       channel: channelId,
       attachments,
     };
