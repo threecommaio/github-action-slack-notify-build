@@ -12,13 +12,14 @@ const { buildSlackAttachments, formatChannelName } = require('./src/utils');
     const token = process.env.SLACK_BOT_TOKEN;
     const slack = new WebClient(token);
     const username = core.getInput('username');
+    const desc = core.getInput('description');
 
     if (!channel && !core.getInput('channel_id')) {
       core.setFailed(`You must provider either a 'channel' or a 'channel_id'.`);
       return;
     }
 
-    const attachments = buildSlackAttachments({ status, color, github });
+    const attachments = buildSlackAttachments({ desc, status, color, github });
     const channelId = core.getInput('channel_id') || (await lookUpChannelId({ slack, channel }));
 
     if (!channelId) {

@@ -24,6 +24,10 @@ inputs:
     description: 'The bots username.'
     required: false
     default: ''
+  description:
+    description: 'The description to use for the deploy.'
+    required: false
+    default: ''
 outputs:
   message_id:
     description: 'The unique timestamp identifier of the Slack message sent'

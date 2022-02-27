@@ -1151,13 +1151,14 @@ const { buildSlackAttachments, formatChannelName } = __webpack_require__(543);
     const token = process.env.SLACK_BOT_TOKEN;
     const slack = new WebClient(token);
     const username = core.getInput('username');
+    const desc = core.getInput('description');
 
     if (!channel && !core.getInput('channel_id')) {
       core.setFailed(`You must provider either a 'channel' or a 'channel_id'.`);
       return;
     }
 
-    const attachments = buildSlackAttachments({ status, color, github });
+    const attachments = buildSlackAttachments({ desc, status, color, github });
     const channelId = core.getInput('channel_id') || (await lookUpChannelId({ slack, channel }));
 
     if (!channelId) {
@@ -10879,7 +10880,7 @@ function hasFirstPage (link) {
 
 const { context } = __webpack_require__(469);
 
-function buildSlackAttachments({ status, color, github }) {
+function buildSlackAttachments({ desc, status, color, github }) {
   const { payload, ref, workflow, eventName } = github.context;
   const { owner, repo } = context.repo;
   const event = eventName;
@@ -10905,6 +10906,11 @@ function buildSlackAttachments({ status, color, github }) {
     {
       color,
       fields: [
+        {
+          title: 'Description',
+          value: `${desc}`,
+          short: true,
+        },
         {
           title: 'Repo',
           value: `<https://github.com/${owner}/${repo} | ${owner}/${repo}>`,
